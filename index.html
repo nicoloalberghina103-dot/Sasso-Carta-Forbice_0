@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta, Forbice, Sasso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #fff0a3;
+        }
+        h1 {
+            color: #a10000;
+        }
+        h2 {
+            color: #c4000069;
+        }
+        h3 {
+            color: #490000;
+            cursor: pointer;
+            display: inline-block;
+            margin: 0 15px;
+            padding: 5px 10px;
+            background-color: #ffe36b;
+            border-radius: 5px;
+        }
+        h3:hover {
+            background-color: #ffcc00;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #fff;
+            background-color: #a10000;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #800000;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="titolo">Benvenuto</h1>
+    <h2 id="informazioni" class="informazioni">Giochiamo: Fai la tua scelta</h2>
+    
+    <div>
+        <h3 id="carta" onclick="cliccatoCarta()" class="opzione">Carta</h3>
+        <h3 id="forbice" onclick="cliccatoForbice()" class="opzione">Forbice</h3>
+        <h3 id="sasso" onclick="cliccatoSasso()" class="opzione">Sasso</h3> 
+    </div>
+
+    <div>
+        <button id="pulsante" onclick="verdetto()">Conferma</button>
+        <button id="pulsante2" onclick="OK()" style="display: none;">OK...</button>
+        <button id="pulsanteRicomincia" onclick="ricominciaPartita()" style="display: none;">Ricomincia</button>
+    </div>
+
+    <script>
+        // Funzione per avviare o resettare il gioco chiedendo il nome
+        function avviaGioco() {
+            alert("Benvenuto nel gioco di carta, forbice e sasso! Scegli una delle tre opzioni e clicca su 'Conferma' per vedere il risultato.");
+            var inserito = window.prompt("Inserisci il tuo nome:");
+            
+            if (inserito && inserito.trim() !== "") {
+                nomeGiocatore = inserito;
+            } else {
+                nomeGiocatore = "Giocatore";
+            }
+            
+            document.getElementById("titolo").innerHTML = "Benvenuto, " + nomeGiocatore + "!";
+        }
+
+        var nomeGiocatore = "";
+        var sceltaGiocatore;
+
+        // Fai partire la richiesta del nome appena si carica la pagina
+        avviaGioco();
+
+        function cliccatoCarta() {
+            sceltaGiocatore = "Carta";
+            alert(nomeGiocatore + ", hai scelto Carta!");
+        }
+        
+        function cliccatoForbice() {
+            sceltaGiocatore = "Forbice";
+            alert(nomeGiocatore + ", hai scelto Forbice!");
+        }
+        
+        function cliccatoSasso() {
+            sceltaGiocatore = "Sasso";
+            alert(nomeGiocatore + ", hai scelto Sasso!");
+        }
+
+        function verdetto() {
+            if (!sceltaGiocatore) {
+                alert("Per favore, seleziona prima Carta, Forbice o Sasso!");
+                return;
+            }
+
+            document.getElementById("carta").style.display = "none";
+            document.getElementById("forbice").style.display = "none"; 
+            document.getElementById("sasso").style.display = "none"; 
+            document.getElementById("pulsante").style.display = "none";
+            document.getElementById("pulsante2").style.display = "inline-block";
+
+            var sceltacomputer;
+            if (sceltaGiocatore == "Carta") {
+                sceltacomputer = "Forbice";
+            } else if (sceltaGiocatore == "Forbice") {
+                sceltacomputer = "Sasso";
+            } else {
+                sceltacomputer = "Carta";
+            }
+
+            document.getElementById("titolo").innerHTML = "Il computer ha scelto: " + sceltacomputer;
+            document.getElementById("informazioni").innerHTML = "Il risultato è: " + sceltaGiocatore + " vs " + sceltacomputer + ". " + nomeGiocatore + ",<br> hai perso!";
+        }
+
+        function OK() {
+            document.getElementById("titolo").innerHTML = "Grazie per aver giocato, " + nomeGiocatore + "!";
+            document.getElementById("informazioni").style.display = "none";
+            document.getElementById("pulsante2").style.display = "none";
+            document.getElementById("pulsanteRicomincia").style.display = "inline-block";
+        }
+
+        function ricominciaPartita() {
+            sceltaGiocatore = undefined;
+            
+            // Richiama la funzione per chiedere eventualmente un nuovo nome o resettare
+            avviaGioco();
+            
+            document.getElementById("informazioni").style.display = "block";
+            document.getElementById("informazioni").innerHTML = "Giochiamo: Fai la tua scelta";
+            
+            document.getElementById("carta").style.display = "inline-block";
+            document.getElementById("forbice").style.display = "inline-block";
+            document.getElementById("sasso").style.display = "inline-block";
+            
+            document.getElementById("pulsante").style.display = "inline-block";
+            document.getElementById("pulsanteRicomincia").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
